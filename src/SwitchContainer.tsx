@@ -7,19 +7,20 @@ interface IProps extends RouteChildrenProps {
 interface IState { }
 
 class SwitchContainer extends React.Component<IProps> {
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    console.log('Before render:', props.history.location.pathname);
-    return null;
-  }
   constructor (props: IProps) {
     super(props);
     this.state = { } as IState;
   }
-  componentDidMount () {
-    console.log('After render: ', this.props);
+  getSnapshotBeforeUpdate (prevProps: IProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      console.log('Before render: prevLocation: ', prevProps.location.pathname, ', newLocation: ', this.props.location.pathname);
+    }
+    return null;
   }
   componentDidUpdate (prevProps: IProps) {
-    console.log('After render: ', this.props);
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      console.log('After render: prevLocation: ', prevProps.location.pathname, ', newLocation: ', this.props.location.pathname);
+    }
   }
   render() {
     return (
